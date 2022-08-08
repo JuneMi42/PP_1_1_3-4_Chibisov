@@ -1,18 +1,14 @@
 package jm.task.core.jdbc.model;
 
 
-
+import java.util.Objects;
 
 public class User {
-
     private Long id;
-
 
     private String name;
 
-
     private String lastName;
-
 
     private Byte age;
 
@@ -20,7 +16,18 @@ public class User {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id) && name.equals(user.name) && lastName.equals(user.lastName) && age.equals(user.age);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, lastName, age);
+    }
 
     public User(String name, String lastName, Byte age) {
         this.name = name;
