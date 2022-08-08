@@ -11,10 +11,8 @@ public class Util {
 
     public static Connection getConnection() {
         Connection connection = null;
-
         try {
             connection = DriverManager.getConnection(url, userName, pass);
-            connection.setAutoCommit(false);
             System.out.println("Connection successful");
         } catch (SQLException e) {
             System.out.println("Connection error");
