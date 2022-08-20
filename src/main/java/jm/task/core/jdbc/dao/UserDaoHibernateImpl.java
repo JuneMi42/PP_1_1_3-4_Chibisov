@@ -10,10 +10,6 @@ import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
     Transaction transaction = null;
-    public UserDaoHibernateImpl() {
-
-    }
-
 
     @Override
     public void createUsersTable() {
@@ -23,7 +19,7 @@ public class UserDaoHibernateImpl implements UserDao {
                     "(id BIGINT(11) primary key not null auto_increment, " +
                     "name VARCHAR(50), " +
                     "lastname VARCHAR(50), " +
-                    "age int)").addEntity(User.class).executeUpdate();
+                    "age int)").executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,7 +34,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void dropUsersTable() {
         try(Session session = Util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.createSQLQuery("DROP TABLE IF EXISTS users").addEntity(User.class).executeUpdate();
+            session.createSQLQuery("DROP TABLE IF EXISTS users").executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,14 +73,13 @@ public class UserDaoHibernateImpl implements UserDao {
                 transaction.rollback();
             }
         }
-
     }
 
     @Override
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
         try(Session session = Util.getSessionFactory().openSession()) {
-            list = session.createQuery("from User").getResultList();
+            list = session.createQuery("from User", User.class).getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,7 +90,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void cleanUsersTable() {
         try(Session session = Util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.createQuery("delete from User").executeUpdate();
+            session.createQuery("delete from User", User.class).executeUpdate();
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

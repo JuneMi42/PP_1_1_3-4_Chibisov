@@ -8,9 +8,6 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
     Connection connection = Util.getConnection();
-    public UserDaoJDBCImpl() {
-
-    }
 
     public void createUsersTable() {
         try (Statement statement = connection.createStatement()) {
